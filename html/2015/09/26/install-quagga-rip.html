@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configure Quagga with RIP</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Configure Quagga with RIP </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<h2 id="description">Description:</h2>
+<p>Install quagga on gw and configure it so traffic can be forwarded between internet and the virtual LAN</p>
+
+<h2 id="implementation">Implementation:</h2>
+
+<h3 id="enable-ip-forwarding">Enable ip-forwarding:</h3>
+<ul>
+  <li>In /etc/sysctl.conf: Uncomment net.ipv4.ip_forward=1</li>
+  <li>Restart gw</li>
+</ul>
+
+<h3 id="installation">Installation:</h3>
+<ul>
+  <li>Run aptitude</li>
+  <li>Locate and install metapackage quagga</li>
+</ul>
+
+<h3 id="configuration">Configuration:</h3>
+<ul>
+  <li>In /etc/quagga/daemons, set the following:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>zebra=yes
+ripd=yes
+</code></pre>
+</div>
+
+<ul>
+  <li>Create /etc/quagga/zebra.conf (owned by quagga:quagga, mode 640):</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hostname gw.d4.sysinst.ida.liu.se
+password read_password
+enable password write_password
+log file /var/log/quagga/zebra.log
+ip forwarding
+ipv6 forwarding
+</code></pre>
+</div>
+
+<ul>
+  <li>Create /etc/quagga/ripd.conf  (owned by quagga:quagga, mode 640):</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>hostname gw.d4.sysinst.ida.liu.se
+password read_password
+enable password write_password
+log file /var/log/quagga/ripd.conf
+router rip
+  version 2
+  network eth1
+  route 130.236.179.88/29
+!
+</code></pre>
+</div>
+
+<h3 id="start">Start:</h3>
+<p><code class="highlighter-rouge">service quagga start</code></p>
+
+<h2 id="verification">Verification:</h2>
+<p>Should be possible to ping google.com from gw, server, client-1 and client-2</p>
+
+<h2 id="backout">Backout:</h2>
+<p>Remove quagga through aptitude</p>
+
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

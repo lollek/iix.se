@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expecting ssh login</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Expecting ssh login </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<h1 id="clean">Clean</h1>
+<div class="highlighter-rouge"><pre class="highlight"><code>#! /usr/bin/env expect
+set host [lindex $argv 0];
+set user [lindex $argv 1];
+set passwd [lindex $argv 2];
+
+set timeout 5
+spawn ssh $user@$host
+
+expect {
+  "yes/no" {
+    send "yes\r"
+    exp_continue
+  }
+
+  "password:" {
+    send "$passwd\r"
+    exp_continue
+  }
+
+  "$user@$host:~? " {
+    exit 0
+  }
+
+  timeout {
+    exit 2
+  }
+}
+
+exit 1
+</code></pre>
+</div>
+
+<h1 id="wrapped-inside-bash">Wrapped inside bash</h1>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="c">#! /usr/bin/env bash</span>
+
+assert_ssh_login<span class="o">()</span> <span class="o">{</span>
+  <span class="nb">local </span><span class="nv">host</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">1</span><span class="k">}</span><span class="s2">"</span>
+  <span class="nb">local </span><span class="nv">user</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">2</span><span class="k">}</span><span class="s2">"</span>
+  <span class="nb">local </span><span class="nv">passwd</span><span class="o">=</span><span class="s2">"</span><span class="k">${</span><span class="nv">3</span><span class="k">}</span><span class="s2">"</span>
+
+  <span class="nb">local </span><span class="nv">details</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span><span class="nb">echo</span> -e <span class="s2">"</span><span class="se">\</span><span class="s2">
+    set timeout 5              </span><span class="se">\n\</span><span class="s2">
+    spawn ssh </span><span class="k">${</span><span class="nv">user</span><span class="k">}</span><span class="s2">@</span><span class="k">${</span><span class="nv">host</span><span class="k">}</span><span class="s2">  </span><span class="se">\n\</span><span class="s2">
+    expect {                   </span><span class="se">\n\</span><span class="s2">
+      </span><span class="se">\"</span><span class="s2">yes/no</span><span class="se">\"</span><span class="s2"> {             </span><span class="se">\n\</span><span class="s2">
+        send </span><span class="se">\"</span><span class="s2">yes</span><span class="se">\r\"</span><span class="s2">         </span><span class="se">\n\</span><span class="s2">
+        exp_continue           </span><span class="se">\n\</span><span class="s2">
+      }                        </span><span class="se">\n\</span><span class="s2">
+                              </span><span class="se">\n\</span><span class="s2">
+      </span><span class="se">\"</span><span class="s2">password:</span><span class="se">\"</span><span class="s2"> {          </span><span class="se">\n\</span><span class="s2">
+        send </span><span class="se">\"</span><span class="k">${</span><span class="nv">passwd</span><span class="k">}</span><span class="se">\r\"</span><span class="s2">   </span><span class="se">\n\</span><span class="s2">
+        exp_continue           </span><span class="se">\n\</span><span class="s2">
+      }                        </span><span class="se">\n\</span><span class="s2">
+                              </span><span class="se">\n\</span><span class="s2">
+      </span><span class="se">\"</span><span class="k">${</span><span class="nv">user</span><span class="k">}</span><span class="s2">@</span><span class="k">${</span><span class="nv">host</span><span class="k">}</span><span class="s2">:~? </span><span class="se">\"</span><span class="s2"> {</span><span class="se">\n\</span><span class="s2">
+        exit 0                 </span><span class="se">\n\</span><span class="s2">
+      }                        </span><span class="se">\n\</span><span class="s2">
+                              </span><span class="se">\n\</span><span class="s2">
+      timeout {                </span><span class="se">\n\</span><span class="s2">
+        exit 2                 </span><span class="se">\n\</span><span class="s2">
+      }                        </span><span class="se">\n\</span><span class="s2">
+    }                          </span><span class="se">\n\</span><span class="s2">
+                              </span><span class="se">\n\</span><span class="s2">
+    exit 1                     </span><span class="se">\n\</span><span class="s2">
+    "</span> | expect<span class="k">)</span><span class="s2">"</span>
+
+  <span class="k">case</span> <span class="s2">"</span><span class="k">${</span><span class="p">?</span><span class="k">}</span><span class="s2">"</span> <span class="k">in</span>
+    <span class="s2">"0"</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"Can login as </span><span class="k">${</span><span class="nv">user</span><span class="k">}</span><span class="s2"> on </span><span class="k">${</span><span class="nv">host</span><span class="k">}</span><span class="s2">"</span> <span class="p">;;</span>
+    <span class="s2">"1"</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">user</span><span class="k">}</span><span class="s2"> can not login on </span><span class="k">${</span><span class="nv">host</span><span class="k">}</span><span class="s2">. Details: </span><span class="k">${</span><span class="nv">details</span><span class="k">}</span><span class="s2">"</span> <span class="p">;;</span>
+    <span class="s2">"2"</span><span class="p">)</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">user</span><span class="k">}</span><span class="s2"> can not login on </span><span class="k">${</span><span class="nv">host</span><span class="k">}</span><span class="s2"> (Timeout). Details: </span><span class="k">${</span><span class="nv">details</span><span class="k">}</span><span class="s2">"</span> <span class="p">;;</span>
+    <span class="k">*</span> <span class="p">)</span> <span class="nb">echo</span> <span class="s2">"</span><span class="k">${</span><span class="nv">user</span><span class="k">}</span><span class="s2"> can not login on </span><span class="k">${</span><span class="nv">host</span><span class="k">}</span><span class="s2"> (Error </span><span class="k">${</span><span class="p">?</span><span class="k">}</span><span class="s2">): Details: </span><span class="k">${</span><span class="nv">details</span><span class="k">}</span><span class="s2">"</span> <span class="p">;;</span>
+  <span class="k">esac</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

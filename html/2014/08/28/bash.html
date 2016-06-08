@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bash</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Great links for Bash </h1>
+  </div>
+  <div class="panel-body">
+
+
+<ul>
+  <li><a href="http://mywiki.wooledge.org/">greycat’s wiki</a></li>
+  <li><a href="http://partmaps.org/era/unix/award.html">Useless Use of Cat Award</a></li>
+</ul>
+
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Rename multiple files </h1>
+  </div>
+  <div class="panel-body">
+
+
+<p>I have multiple directories with the following format:<br />
+directory.name [word123]<br />
+directory.name1 [word123]<br />
+directory.name2 [word123]<br />
+directory.name3 [word123]<br />
+etc.<br />
+I would like to remove the [word123] from each directory name. It is
+unreasonable to perform a mv for each as there are simply too many!</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>for r in ./*\ \[word123\]; do mv "$r" "${r%\ \[word123\]}"; done
+</code></pre>
+</div>
+
+
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Switch to a fake bash login-shell </h1>
+  </div>
+  <div class="panel-body">
+
+
+<div class="highlighter-rouge"><pre class="highlight"><code>exec -l bash           # If you're in bash:
+bash -c 'exec -l bash' # If you're in another shell
+</code></pre>
+</div>
+
+
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Fake running program name </h1>
+  </div>
+  <div class="panel-body">
+
+
+<div class="highlighter-rouge"><pre class="highlight"><code>(exec -a 'vim thesis.tex' nethack)
+</code></pre>
+</div>
+
+
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Deleting file with unprintable characters </h1>
+  </div>
+  <div class="panel-body">
+
+
+<p>One example would be if you open vim and then type :w\^Z, where ^Z is created by
+holding CTRL and clicking Z.</p>
+
+<p><strong>1. Run ls -b to check their escaped name</strong> (in my case this will be \032)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>$ ls -b
+\032  policy.rb  upp1.rb
+</code></pre>
+</div>
+
+<p><strong>2. Let echo -e print out the name for you in your command</strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>rm $(echo -e "\032")
+</code></pre>
+</div>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

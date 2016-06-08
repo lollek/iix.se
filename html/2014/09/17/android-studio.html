@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Android Studio Installation</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Android Studio Installation </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<ol>
+  <li>Download <a href="https://developer.android.com/sdk/installing/studio.html">android studio</a></li>
+  <li>Untar it to /opt/android-studio</li>
+  <li>Symlink /opt/android-studio/bin/studio.sh to /usr/local/bin/android-studio</li>
+  <li>Download <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">oracle’s java</a></li>
+  <li>Untar it to /opt/oracle-java</li>
+  <li>(Ubuntu) Symlink /opt/oracle-java to /usr/lib/jvm/default-java</li>
+  <li>(Ubuntu) Symlink /opt/oracle-java/bin/java to /usr/bin/java</li>
+</ol>
+
+<h2 id="if-you-have-64-bit">If you have 64-bit</h2>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># On ubuntu</span>
+sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 lib32stdc++6</code></pre></figure>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

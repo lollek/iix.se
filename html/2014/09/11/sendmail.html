@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Testing Sendmail</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Links </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<h2 id="links">Links</h2>
+<ul>
+  <li><a href="https://qmail.jms1.net/test-auth.shtml">qmail.jms1.net</a></li>
+  <li><a href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/SMTP-Auth.html">BSD Handbook</a></li>
+  <li><a href="http://www.sendmail.org/~ca/email/auth.html">Sendmail.org</a></li>
+</ul>
+
+<p>This expects you to have netcat, perl and openssl installed</p>
+
+<h2 id="hello-without-tls">Hello without TLS</h2>
+<pre>
+<b>nc mail.server.com 25</b>
+220 mail.server.com ESMTP Sendmail 8.14.7/8.14.7; Thu, 11 Sep 2014 12:01:22 +0200 (CEST)
+<b>ehlo friendly.server.com</b>
+250-mail.server.com Hello friendly [1.2.3.4], pleased to meet you
+250-ENHANCEDSTATUSCODES
+250-PIPELINING
+250-8BITMIME
+250-SIZE
+250-DSN
+250-ETRN
+250-AUTH DIGEST-MD5 CRAM-MD5
+250-STARTTLS
+250-DELIVERBY
+250 HELP
+<b>quit</b>
+221 2.0.0 mail.server.com closing connection
+</pre>
+
+<h2 id="hello-with-tls">Hello with TLS</h2>
+<pre>
+<b>openssl s_client -starttls smtp -crlf -connect mail.server.com:25</b>
+# ...Loads of text here...
+<b>ehlo friendly.server.com</b>
+# ... Same as login without TLS (above) ...
+</pre>
+
+<h2 id="test-login">Test login</h2>
+<pre>
+<b>perl -MMIME::Base64 -e 'print encode_base64("\000coolname\@iix.se\000my-password")'</b>
+AGNvb2xuYW1lQGlpeC5zZQBteS1wYXNzd29yZA==
+# .. Log in to server with one of the above ...
+<b>AUTH PLAIN AGNvb2xuYW1lQGlpeC5zZQBteS1wYXNzd29yZA==</b>
+235 2.0.0 OK Authenticated
+<b>quit</b>
+221 2.0.0 mail.server.com closing connection
+</pre>
+
+<h2 id="sending-mail">Sending mail</h2>
+<pre>
+<b>mail from: &lt;nospam@jms1.net&gt;</b>
+250 ok
+<b>rcpt to: &lt;nospam@jms1.net&gt;</b>
+250 ok
+<b>data</b>
+354 go ahead
+<b>From: John &lt;nospam@jms1.net&gt;
+To: Nobody &lt;nospam@jms1.net&gt;
+Subject: fnord
+
+hail eris!
+.</b>
+250 ok 1113954693 qp 29052
+<b>quit</b>
+</pre>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

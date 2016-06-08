@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Installing NFS Server</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Installing NFS Server </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<h2 id="description">Description:</h2>
+<p>Install the NFS Kernel Server and allow mappings from the subnet 130.236.179.88/29</p>
+
+<h2 id="implementation-server-side">Implementation (Server-side):</h2>
+<ul>
+  <li>Login as root</li>
+  <li>Install package nfs-kernel-server</li>
+  <li>Add the following line to /etc/hosts.allow:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>portmap: 130.236.179.88/255.255.255.248
+</code></pre>
+</div>
+<ul>
+  <li>Add the following line to /etc/exports:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/usr/local         130.236.179.88/29(ro,root_squash,subtree_check)
+</code></pre>
+</div>
+
+<ul>
+  <li>Restart the services</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>service portmap restart
+service nfs-kernel-server restart
+</code></pre>
+</div>
+
+<h2 id="implementation-client-side">Implementation (Client-side):</h2>
+<ul>
+  <li>Login as root</li>
+  <li>Install package nfs-common</li>
+  <li>Attempt a mount:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mount -o ro,vers=3 -t nfs server.d4.sysinst.ida.liu.se:/usr/local /usr/local
+</code></pre>
+</div>
+
+<ul>
+  <li>If it works, add the following line to /etc/fstab:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>server.d4.sysinst.ida.liu.se:/usr/local       /usr/local    nfs       ro,vers=3             0 0 
+</code></pre>
+</div>
+
+<h2 id="verification">Verification:</h2>
+<ol>
+  <li>Create file /usr/local/bin/hello which echoes hello.</li>
+  <li>Run hello on client, should echo hello.</li>
+  <li>Make sure it’s not possible to mount from other host</li>
+</ol>
+
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

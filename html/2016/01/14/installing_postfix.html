@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Installing Postfix on System</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Installing Postfix on System </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<h2 id="description">Description:</h2>
+<p>Criterias:</p>
+
+<ol>
+  <li>Accept mail from any SMTP server in the world.</li>
+  <li>Be able to send mail to any SMTP server in the world.</li>
+  <li>Not accept mail for any other destinations than your domain.</li>
+  <li>Meet the requirements of RFC 2821, section 4.5.1 concerning the postmaster address.</li>
+  <li>Should rewrite local usernames to real names through LDAP lookups</li>
+  <li>Forwarded email from satellite systems should have their FQDN rewritten to
+this server’s</li>
+</ol>
+
+<h2 id="implementation-main-server">Implementation (Main server):</h2>
+<ul>
+  <li>Login on server as root:</li>
+  <li>Install postfix through aptitude
+    <ul>
+      <li>Select type <strong>Internet Site</strong></li>
+      <li>Set System Mail Name to <strong>d4.sysinst.ida.liu.se</strong></li>
+    </ul>
+  </li>
+  <li>In /etc/postfix/main.cf, add the following lines:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>mynetworks = 127.0.0.0/8 130.236.179.88/29 [::ffff:127.0.0.0]/104 [::1]/128
+masquerade_domains = $mydomain
+local_header_rewrite_clients = permit_mynetworks
+sender_canonical_maps = ldap:/etc/postfix/canonical_sender
+recipient_canonical_maps = ldap:/etc/postfix/canonical_recipent
+</code></pre>
+</div>
+
+<ul>
+  <li>Create /etc/postfix/canonical_sender:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>search_base = ou=People,dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se
+server_host = server.d4.sysinst.ida.liu.se
+bind = no
+version = 3
+domain = d4.sysinst.ida.liu.se
+query_filter = uid=%u
+result_attribute = mail
+</code></pre>
+</div>
+
+<ul>
+  <li>Create /etc/postfix/canonical_recipent:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>search_base = ou=People,dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se
+server_host = server.d4.sysinst.ida.liu.se
+bind = no
+version = 3
+domain = d4.sysinst.ida.liu.se
+query_filter = mail=%s
+result_attribute = uid
+</code></pre>
+</div>
+
+<ul>
+  <li>Set MX record. Add line to /etc/bind/db.d4.sysinst.ida.liu.se:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@        IN     MX      10 server.d4.sysinst.ida.liu.se.
+</code></pre>
+</div>
+
+<ul>
+  <li>Restart the services:</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>service postfix restart
+service bind9 restart
+</code></pre>
+</div>
+
+<h2 id="implementation-satellite-systemsclients">Implementation (Satellite Systems/Clients):</h2>
+<ol>
+  <li>Install postfix through aptitude
+    <ol>
+      <li>Select type <strong>Satellite System</strong></li>
+      <li>Set System Mail Name to <strong>d4.sysinst.ida.liu.se</strong></li>
+      <li>Set SMTP Relay Host to <strong>server.d4.sysinst.ida.liu.se</strong></li>
+    </ol>
+  </li>
+</ol>
+
+<h2 id="verification">Verification:</h2>
+<ol>
+  <li>Test that the server can receive email from generic server outside of LAN</li>
+  <li>Test that the server can send email to generic server outside of LAN</li>
+  <li>Test that the server does not accept email for other domains than
+ d4.sysinst.ida.liu.se</li>
+  <li>Test that all clients can send email to
+ *@d4.sysinst.ida.liu.se and they should end up on server</li>
+  <li>Test that all clients do not have smtp open to LAN/WAN</li>
+</ol>
+
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

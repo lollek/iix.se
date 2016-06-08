@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Command Line Interface</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> How many colors do I have? </h1>
+  </div>
+  <div class="panel-body">
+
+These can usually be seen by typing
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">tput colors</code></pre></figure>
+
+
+<p>or you can download and run <a href="/data/256colors">256colors</a> to see them</p>
+
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Tip: Columnize output </h1>
+  </div>
+  <div class="panel-body">
+
+Pipe it through 'column -t'
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">ss -tunap | column -t</code></pre></figure>
+
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Locale </h1>
+  </div>
+  <div class="panel-body">
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Current Locale: init(sysV)</span>
+locale
+locale charmap
+
+<span class="c"># Current Locale: systemd</span>
+localectl status
+locale charmap
+
+<span class="c"># List Locale: init(sysV)</span>
+locale -a
+
+<span class="c"># List Locale: systemd</span>
+localectl list-locales
+
+<span class="c"># Change Locale: init(sysV)</span>
+<span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8        <span class="c"># for local use</span>
+update-locale <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8 <span class="c"># for global use</span>
+
+<span class="c"># Change Locale: systemd</span>
+localectl <span class="nb">set</span>-locale <span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+
+<span class="c"># X11 Keyboard Layout: init(sysV)</span>
+setxkbmap -layout us -variant intl      <span class="c"># for local use</span>
+dpkg-reconfigure keyboard-configuration <span class="c"># for global use</span>
+
+<span class="c"># X11 Keyboard Layout: systemd</span>
+localectl <span class="nb">set</span>-x11-keymap us</code></pre></figure>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

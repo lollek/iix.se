@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Setup Teamspeak3 Server</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Setup Teamspeak3 Server </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<h2 id="test-hello-world">Test HELLO WORLD</h2>
+
+<ol>
+  <li>Download tarball from www.teamspeak.com</li>
+  <li>Untar to /home/teamspeak</li>
+  <li>Add user/group teamspeak</li>
+  <li>Run the init as teamspeak &lt;pre&gt;
+ sudo su - teamspeak
+ ./ts3server_minimal_runscript.sh createinifile=1</li>
+</ol>
+<p>&lt;/pre&gt;
+5. Configure ts3server.ini
+6. Make sure you can start it (then ^C to kill it) &lt;pre&gt;
+    ./ts3server_startscript.sh start
+  &lt;/pre&gt;
+7. Create /etc/systemd/system/teamspeak.service &lt;pre&gt;
+    [Unit]
+    Description=Teamspeak server
+    After=network.target</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[Service]
+User=teamspeak
+Group=teamspeak
+Type=forking
+PIDFile=/home/teamspeak/ts3server.pid
+ExecStart=/home/teamspeak/ts3server_startscript.sh start
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+</div>
+<p>&lt;/pre&gt;
+8. Test it thought systemctl and then enable it &lt;pre&gt;
+    sudo systemctl start teamspeak.service
+    sudo systemctl enable teamspeak.service
+  &lt;/pre&gt;</p>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

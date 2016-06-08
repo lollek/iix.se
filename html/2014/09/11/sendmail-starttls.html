@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sendmail @ FreeBSD - Activating SMTP AUTH (PLAIN) through STARTLS</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Sendmail @ FreeBSD - Activating SMTP AUTH (PLAIN) through STARTLS </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<p>N.B. This expects a working sendmail installation with STARTTLS</p>
+
+<h2 id="install-cyrus-sasl">Install cyrus-sasl</h2>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># install cyrus-sasl2</span>
+<span class="nb">cd</span> /usr/ports/security/cyrus-sasl2
+make install clean
+<span class="nb">echo</span> <span class="s2">"pwcheck_method: saslauthd"</span> &gt; /usr/local/lib/sasl2/Sendmail.conf
+
+<span class="c"># install cyrus-sasl2-saslauthd</span>
+<span class="nb">cd</span> /usr/ports/security/cyrus-sasl2-saslauthd
+make install clean
+<span class="nb">echo</span> <span class="s1">'saslauthd_enable="YES"'</span> &gt;&gt; /etc/rc.conf
+service saslauthd start</code></pre></figure>
+
+
+<h2 id="set-sendmail-make-flags">Set sendmail make flags</h2>
+<p>Set the following flags in /etc/make.conf (create if it doesn’t exist)</p>
+
+
+<figure class="highlight"><pre><code class="language-make" data-lang="make"><span class="nv">SENDMAIL_CFLAGS</span><span class="o">=</span>-I/usr/local/include/sasl -DSASL
+<span class="nv">SENDMAIL_LDFLAGS</span><span class="o">=</span>-L/usr/local/lib
+<span class="nv">SENDMAIL_LDADD</span><span class="o">=</span><span class="err">-lsasl2</span></code></pre></figure>
+
+
+<h2 id="recompile-sendmail">Recompile sendmail</h2>
+<p>Did you have the source in /usr/src? Otherwise you will need to run
+the following command. If you don’t use RELEASE-10, you should change that.</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">svnlite checkout http://svn.freebsd.org/base/release/10.0.0/ /usr/src</code></pre></figure>
+
+Now recompile sendmail
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /usr/src/lib/libsmutil
+make cleandir <span class="o">&amp;&amp;</span> make obj <span class="o">&amp;&amp;</span> make
+<span class="nb">cd</span> /usr/src/lib/libsm
+make cleandir <span class="o">&amp;&amp;</span> make obj <span class="o">&amp;&amp;</span> make
+<span class="nb">cd</span> /usr/src/usr.sbin/sendmail
+make cleandir <span class="o">&amp;&amp;</span> make obj <span class="o">&amp;&amp;</span> make <span class="o">&amp;&amp;</span> make install</code></pre></figure>
+
+
+<h2 id="do-some-config-switcheroo">Do some config switcheroo</h2>
+<p>Fetch a sendmail config if you don’t already have one</p>
+
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">cd</span> /etc/mail
+make</code></pre></figure>
+
+Now you should have a your-hostname.mc file. If you DON'T want AUTH PLAIN,
+you can simply add the following lines
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">dnl <span class="nb">set </span>SASL options
+TRUST_AUTH_MECH<span class="o">(</span><span class="sb">`</span>GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN<span class="s1">')dnl
+define(`confAUTH_MECHANISMS'</span>, <span class="sb">`</span>GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN<span class="s1">')dnl</span></code></pre></figure>
+
+If you DO want AUTH PLAIN, add these instead
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">dnl Set SASL options
+dnl Only allow AUTH LOGIN PLAIN through STARTTLS and disallow anons
+dnl
+define<span class="o">(</span><span class="sb">`</span>confAUTH_OPTIONS<span class="s1">', `A p y'</span><span class="o">)</span>dnl
+TRUST_AUTH_MECH<span class="o">(</span><span class="sb">`</span>GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN PLAIN<span class="s1">')dnl
+define(`confAUTH_MECHANISMS'</span>, <span class="sb">`</span>GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN PLAIN<span class="s1">')dnl</span></code></pre></figure>
+
+
+Now install them and restart sendmail
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">make install restart</code></pre></figure>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
