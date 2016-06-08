@@ -2,14 +2,16 @@
     'use strict';
 
     var app = angular.module('mainApp', [
-        /*'ngRoute', */
+        'ngRoute'
     ]);
 
+    /*
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when("/", {templateUrl: "partials/main.html"})
             .otherwise("/404", {templateUrl: "partials/main.html"});
     }]);
+    */
 
     app.controller('NotesController', function() {
        this.posts = note_posts;
