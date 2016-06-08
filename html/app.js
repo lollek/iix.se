@@ -4,7 +4,7 @@
     var app = angular.module('main', []);
 
     app.controller('NotesController', function() {
-       this.notes = [
+       this.posts = [
            {
                href: "/2016/03/24/awk.html",
                date: "24 Mar 2016",
