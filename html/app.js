@@ -8,6 +8,7 @@
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when("/", {templateUrl: "partials/main.html"})
+            .when("/notes", {templateUrl: "partials/notes.html"})
             .otherwise("/404", {templateUrl: "partials/main.html"});
     }]);
 
