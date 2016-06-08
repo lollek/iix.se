@@ -7,7 +7,7 @@
 
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
-            .when("/", {templateUrl: "partials/main.html", <div>controller: NotesController</div>});
+            .when("/", {templateUrl: "partials/main.html"})
     }]);
 
     app.controller('NotesController', function() {
