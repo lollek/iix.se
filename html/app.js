@@ -1,7 +1,14 @@
 (function() {
     'use strict';
 
-    var app = angular.module('mainApp', []);
+    var app = angular.module('mainApp', [
+        'ngRoute'
+    ]);
+
+    app.config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when("/", {templateUrl: "partials/main.html"});
+    }]);
 
     app.controller('NotesController', function() {
        this.posts = note_posts;
