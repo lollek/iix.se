@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>smb.conf</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> smb.conf </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<div class="highlighter-rouge"><pre class="highlight"><code># This is the main Samba configuration file. You should read the
+# smb.conf(5) manual page in order to understand the options listed
+# here. Samba has a huge number of configurable options (perhaps too
+# many!) most of which are not shown in this example
+#
+# Any line which starts with a ; (semi-colon) or a # (hash) 
+# is a comment and is ignored. In this example we will use a #
+# for commentry and a ; for parts of the config file that you
+# may wish to enable
+#
+# NOTE: Whenever you modify this file you should run the command "testparm"
+# to check that you have not made any basic syntactic errors. 
+#
+#======================= Global Settings =====================================
+[global]
+  netbios name = David
+  workgroup = WORKGROUP
+  server string = David
+
+  wins support = true
+  dns proxy = no
+  hosts allow = 192.168.1.
+  security = user
+  map to guest = Bad User
+  default service = global
+  #server signing = mandatory ; Doesn't seem to work on OSX
+
+  #log level = 2
+  log file = /var/log/samba/%m.log
+  max log size = 50
+
+  public = yes
+  available = yes
+  browseable = yes
+  only guest = yes
+  read only = yes
+
+
+; Disable printers
+  load printers = no
+  printing = bsd
+  printcap name = /dev/null
+  show add printer wizard = no
+  disable spoolss = yes
+#============================ Share Definitions ==============================
+[ftp]
+  comment = Public Stuff
+  path = /var/ftp/public
+  read only = no
+  directory mask = 5777    create mask = 5677
+</code></pre>
+</div>
+
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

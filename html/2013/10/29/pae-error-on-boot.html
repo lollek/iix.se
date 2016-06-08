@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PAE Error on boot</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> PAE Error on boot </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<p><strong><em>If you found this page through Google, it would be stupid to follow these instructions to the letter</em></strong></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>This kernel requires the following features not present on the CPU:
+pae
+Unable to boot - please use a kernel appropriate for your CPU.
+</code></pre>
+</div>
+
+<h2 id="step-1-chroot">Step 1: Chroot</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>mount /dev/sda2 /mnt
+for i in dev proc sys; do mount --bind /$i /mnt/$i; done
+chroot /mnt
+</code></pre>
+</div>
+
+<h2 id="step-2-make-initrd">Step 2: Make initrd</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>cd /boot
+mkinitrd -c -k 3.2.45 -m ext2 -f ext2 -r /dev/sda2
+</code></pre>
+</div>
+
+<h2 id="step-3-add-to-lilo">Step 3: Add to lilo</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>echo &gt;&gt;/etc/lilo.conf &lt;&lt;EOF
+# Linux bootable partition config begins
+image = /boot/vmlinuz-generic-3.2.45
+initrd = /boot/initrd.gz
+root = /dev/sda2
+label = Slacky-3.2.45-initrd
+read-only
+# Linux bootable partition config ends
+EOF
+</code></pre>
+</div>
+
+<h2 id="step-4-update-lilo-and-reboot">Step 4: Update lilo and reboot</h2>
+<div class="highlighter-rouge"><pre class="highlight"><code>lilo
+exit
+umount /mnt/{dev,proc,sys,}
+reboot
+</code></pre>
+</div>
+
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

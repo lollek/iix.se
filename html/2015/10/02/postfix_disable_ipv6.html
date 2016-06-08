@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Postfix Address Family Not Supported</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Postfix Address Family Not Supported </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<p>Basically, postfix was configured with ipv6 support when the OS does not provide
+it</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Starting Postfix Mail Transport Agent: postfixpostmulti: warning:
+inet_protocols: disabling IPv6 name/address support: Address family not supported by protocol
+postmulti: warning: inet_protocols: disabling IPv6 name/address support: Address family not supported by protocol
+postfix: warning: inet_protocols: disabling IPv6 name/address support: Address family not supported by protocol
+</code></pre>
+</div>
+
+<h2 id="solution">Solution:</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>sudo postconf -e 'inet_protocols = ipv4'
+sudo /etc/init.d/postfix restart
+</code></pre>
+</div>
+
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

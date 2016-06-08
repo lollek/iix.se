@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configure static network</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Install network interfaces </h1>
+  </div>
+  <div class="panel-body">
+
+<h2>Description:</h2>
+
+<p>The first step is to establish basic network connectivity for your router/gateway.
+This will allow you to connect to the installation server on the distribution network,
+from which you can install the routing software needed in later steps.
+Your router needs three network interfaces:</p>
+
+
+<ul>
+<li>the loopback interface (lo; which is used for network connections within the gateway)</li>
+<li>the interface connected to the distribution network (eth1)</li>
+<li>the interface connected to your network (eth0).</li>
+</ul>
+
+
+<p>Each interface needs an address, netmask and broadcast address.
+It is important that you specify the correct netmask and broadcast address!</p>
+
+<p>D4-router.lab-2 expected configuration:</p>
+
+<pre><code>lo   - loopback
+
+eth0 - internal network
+  Network:    130.236.179.88/29
+  IP-Address: 130.236.179.89
+  Netmask:    255.255.255.248
+  Broadcast:  130.236.179.95
+
+eth1 - external network
+  Network:    130.236.178.0/26
+  IP-Address: 130.236.178.33
+  Netmask:    255.255.255.192
+  Broadcast:  130.236.178.63
+  Gateway:    130.236.178.1
+</code></pre>
+
+<h2>Implementation:</h2>
+
+<ol>
+<li>Login to D4-router.lab-2 as root</li>
+<li>Copy /etc/network/interfaces to /etc/network/interfaces.change.0002</li>
+<li>Open /etc/network/interfaces in vi and add the following contents:</li>
+</ol>
+
+
+<pre><code>auto lo eth0 eth1
+
+iface lo inet loopback
+
+iface eth0 inet static
+  address 130.236.179.89
+  netmask 255.255.255.248
+  broadcast 130.236.179.95
+
+iface eth1 inet static
+  address 130.236.178.33
+  netmask 255.255.255.192
+  broadcast 130.236.178.63
+  gateway 130.236.178.1
+</code></pre>
+
+<p>Save file and run <code>ifup lo eth0 eth1</code></p>
+
+<h2>Verification:</h2>
+
+<ul>
+<li>Should be able to ping 130.236.178.1 from D4-router.lab-2</li>
+<li>Restart router</li>
+<li>Should be able to ping 130.236.178.1 from D4-router.lab-2</li>
+</ul>
+
+
+<h2>Backout:</h2>
+
+<p>  None needed</p>
+
+  </div>
+</div>
+
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Connect wlan0 to essid with dhcp at boot </h1>
+  </div>
+  <div class="panel-body">
+
+<p>Get wpa-psk by running <code>wpa_passphrase MyNetwork MyPassphrase</code>.<br/>
+/etc/network/interfaces should be chmod 0600 if you put the wpa-psk there</p>
+
+<pre><code>source /etc/network/interfaces.d/*
+
+# The loopback network interface
+auto lo wlan0
+iface lo inet loopback
+
+iface wlan0 inet dhcp
+  wpa-ssid MyNetwork
+  wpa-psk a2d024861ef90117c47083c9252d1e9c107c7cc6ab938cd08349c9192d444d2f
+</code></pre>
+
+  </div>
+</div>
+
+
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

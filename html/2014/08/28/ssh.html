@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SSH Agent</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> SSH Agent </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<p>If you has a rsa-key and don’t want to write in your credentials every time you ssh, you can use ssh-agent instead.
+Add this to your .bash_profile (or make it a standalone script you execute once at startup)</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>SSHAGENT=$(command -v ssh-agent)
+SSHAGENTARGS="-s"
+if ! pgrep -xu $USER ssh-agent &amp;&gt;/dev/null; then
+  if [[ -z "$SSH_AUTH_SOCK" &amp;&amp; -x "$SSHAGENT" ]]; then
+    eval "$($SSHAGENT $SSHAGENTARGS)"
+    trap "kill $SSH_AGENT_PID" 0
+  fi
+fi
+</code></pre>
+</div>
+
+<p>Then you add you credentials once by typing ssh-add (which will add ~/.ssh/id_rsa, you can also add others) and write in your password. Now ssh-agent will automatically provide the password for you for the duration of the session.</p>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

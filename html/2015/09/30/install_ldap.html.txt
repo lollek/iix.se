@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Install and configure LDAP on server</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap_custom.css">
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">iix-notes</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/notes.html">Notes</a></li>
+        <li><a href="/beer.html">Beerlist</a></li>
+        <li><a href="/wishlist.html">Wishlist</a></li>
+        <li><a href="/moria">Moria</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+        <div class="container" role="main"><div class="panel panel-default">
+  <div class="panel-heading">
+    <h1 class="panel-title"> Install and configure LDAP on server </h1>
+  </div>
+  <div class="panel-body">
+
+
+
+<h2 id="description">Description:</h2>
+<p>Configure LDAP to the domain d4.sysinst.ida.liu.se</p>
+
+<h2 id="implementation">Implementation:</h2>
+<ol>
+  <li>Login to server as root</li>
+  <li>Install the packages slapd, ldap-utils and migrationtools</li>
+  <li>
+    <p>Set /etc/ldap/ldap.conf so contain the following: &lt;pre&gt;
+ #
+ # LDAP Defaults
+ #</p>
+
+    <p># See ldap.conf(5) for details
+ # This file should be world readable but not world writable.</p>
+
+    <p>BASE    dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se
+ URI     ldapi:///</p>
+  </li>
+</ol>
+<p>&lt;/pre&gt;
+4. In /etc/migrationtools/migrate_common.ph, locate and set the following: &lt;pre&gt;
+    $DEFAULT_MAIL_DOMAIN = “d4.sysinst.ida.liu.se”;
+    $DEFAULT_BASE = “dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se”;
+  &lt;/pre&gt;
+5. cd /usr/share/migrationtools
+6. ./migrate_all_online.sh
+7. Install package libnss-ldapd through aptitude, use all services
+8. Edit /etc/nsswitch.conf, change all “compat” to “files”
+9. In /etc/pam.d/common-session, add line to end: &lt;pre&gt;
+    session required        pam_mkhomedir.so skel=/etc/skel umask=0022
+  &lt;/pre&gt;</p>
+
+<h2 id="verification">Verification:</h2>
+<ol>
+  <li>Create /root/olle.ldif &lt;pre&gt;
+ root@server:~# cat user.ldif
+ dn: uid=olle,ou=People,dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se
+ objectClass: top
+ objectClass: account
+ objectClass: posixAccount
+ objectClass: shadowAccount
+ cn: olle
+ uid: olle
+ uidNumber: 10000
+ gidNumber: 100
+ homeDirectory: /home/olle
+ loginShell: /bin/bash
+ gecos: olle
+ userPassword: {crypt}x
+ shadowLastChange: 0
+ shadowMax: 99999
+ shadowWarning: 0</li>
+</ol>
+<p>&lt;/pre&gt;</p>
+
+<ol>
+  <li><code class="highlighter-rouge">ldapadd -W -D "cn=admin,dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se" -f olle.ldif</code></li>
+  <li>
+    <p><code class="highlighter-rouge">ldappasswd -s mypassword -W -D
+  "cn=admin,dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se"
+  "uid=olle,ou=People,dc=d4,dc=sysinst,dc=ida,dc=liu,dc=se"</code></p>
+  </li>
+  <li>Running <code class="highlighter-rouge">getent passwd</code> should now return olle as a user with uid 10000</li>
+</ol>
+
+  </div>
+</div>
+
+</div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
