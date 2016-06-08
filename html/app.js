@@ -2,12 +2,12 @@
     'use strict';
 
     var app = angular.module('mainApp', [
-        'ngRoute'
+        'ngRoute',
     ]);
 
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
-            .when("/", {templateUrl: "partials/main.html"});
+            .when("/", {templateUrl: "partials/main.html", <div>controller: NotesController</div>});
     }]);
 
     app.controller('NotesController', function() {
