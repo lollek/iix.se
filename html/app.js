@@ -50,7 +50,7 @@
         },
         {
             href: "/notes/2015-10-20-expect_ssh_login.html",
-            date: "20 Oct 2015</",
+            date: "20 Oct 2015",
             title: "Expecting ssh login",
         },
         {
