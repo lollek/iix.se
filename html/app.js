@@ -17,6 +17,11 @@
             .when("/beer", {templateUrl: "partials/beer.html"})
             .when("/wishlist", {templateUrl: "partials/wishlist.html"})
             .when("/moria", {templateUrl: "partials/moria.html"})
+            .when("/moria/:name", {
+                templateUrl: function(urlattr) {
+                    return "/partials/moria/" + urlattr.name;
+                }
+            })
             .otherwise({redirectTo: "/"});
     }]);
 
