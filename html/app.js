@@ -6,10 +6,14 @@
     ]);
 
     app.config(['$routeProvider', function($routeProvider) {
-
         $routeProvider
             .when("/", {templateUrl: "partials/main.html"})
             .when("/notes", {templateUrl: "partials/notes.html"})
+            .when("/notes/:name", {
+                templateUrl: function(urlattr) {
+                    return "/partials/notes/" + urlattr.name;
+                }
+            })
             .when("/beer", {templateUrl: "partials/beer.html"})
             .when("/wishlist", {templateUrl: "partials/wishlist.html"})
             .when("/moria", {templateUrl: "partials/moria.html"})
