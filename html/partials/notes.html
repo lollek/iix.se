@@ -3,7 +3,7 @@
         <h1>Notes</h1>
         <div class="list-group" ng-controller="NotesController as notes">
 
-            <a class="list-group-item" ng-repeat="note in notes.posts" href="{{note.href}}">
+            <a class="list-group-item" ng-repeat="note in notes.posts" href="{{"/#/notes/" + note.href}}">
                 <span class="badge">{{note.date}}</span>
                 &raquo;
                 {{note.title}}
