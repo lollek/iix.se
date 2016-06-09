@@ -11,6 +11,7 @@
             .when("/notes", {templateUrl: "partials/notes.html"})
             .when("/beer", {templateUrl: "partials/beer.html"})
             .when("/wishlist", {templateUrl: "partials/wishlist.html"})
+            .when("/moria", {templateUrl: "partials/moria.html"})
             .otherwise("/404", {templateUrl: "partials/main.html"});
     }]);
 
