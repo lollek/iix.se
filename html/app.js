@@ -5,9 +5,7 @@
         'ngRoute'
     ]);
 
-    app.config(['$locationProvider', '$routeProvider',
-        function($locationProvider, $routeProvider) {
-        $locationProvider.html5Mode(true);
+    app.config(['$routeProvider', function($routeProvider) {
 
         $routeProvider
             .when("/", {templateUrl: "partials/main.html"})
