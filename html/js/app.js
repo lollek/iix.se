@@ -7,11 +7,11 @@
 
     app.config(['$routeProvider', function($routeProvider) {
         $routeProvider
-            .when("/", {templateUrl: "partials/main.html"})
+            .when("/", {templateUrl: "../partials/main.html"})
             
             // Notes
             .when("/notes", {
-                templateUrl: "partials/notes.html",
+                templateUrl: "../partials/notes.html",
                 controller: "NotesController"
             })
             .when("/notes/:name", {
@@ -21,13 +21,13 @@
             })
             
             // Beerlist
-            .when("/beer", {templateUrl: "partials/beer.html"})
+            .when("/beer", {templateUrl: "../partials/beer.html"})
             
             // Wishlist
-            .when("/wishlist", {templateUrl: "partials/wishlist.html"})
+            .when("/wishlist", {templateUrl: "../partials/wishlist.html"})
             
             // Moria
-            .when("/moria", {templateUrl: "partials/moria.html"})
+            .when("/moria", {templateUrl: "../partials/moria.html"})
             .when("/moria/:name", {
                 templateUrl: function(urlattr) {
                     return "/partials/moria/" + urlattr.name;
