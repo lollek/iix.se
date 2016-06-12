@@ -5,6 +5,7 @@
         function($scope, $routeParams) {
             $scope.notes = note_posts;
             $scope.noteIndex = $routeParams.noteId;
+            $scope.notePath = "/partials/notes/" + $scope.notes[$scope.noteIndex].href;
         }]);
 
     var note_posts = [
