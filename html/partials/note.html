@@ -3,33 +3,8 @@
         <div class="panel-heading">
             <h1 class="panel-title"> {{notes[noteIndex].title}} </h1>
         </div>
-        <div class="panel-body">
 
-<p>These instructions are old and probably don’t work anymore</p>
-
-<div class="highlighter-rouge"><pre class="highlight"><code># Step 1: Add spotify-sources to apt-repo
-echo "deb http://repository.spotify.com stable non-free" &gt;&gt; /etc/apt/sources.list
-
-# Step 2: Add key
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 94558F59
-
-# Step 3: Fetch updates
-apt-get update
-
-# Step 4: Add this stupid old dependency
-# This might not be needed anymore / on other distros. Just do it if the next step doesn't work
-wget snapshot.debian.org/archive/debian/20110406T213352Z/pool/main/o/openssl098/libssl0.9.8_0.9.8o-6_amd64.deb
-dpkg -i libssl0.9.8_0.9.8o-6_amd64.deb
-
-# Step 5: Install spotify
-apt-get install spotify-client
-
-# Step 6: Run spotify!
-spotify
-</code>
-</pre>
-</div>
-
+        <div class="panel-body" ng-include=notes[noteIndex].href>
         </div>
     </div>
 </div>
