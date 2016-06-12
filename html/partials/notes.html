@@ -6,7 +6,7 @@
             <a class="list-group-item" ng-repeat="note in notes.posts" href="{{'/#/notes/' + note.href}}">
                 <span class="badge">{{note.date}}</span>
                 &raquo;
-                {{note.title}}
+                {{$index + note.title}}
             </a>
 
         </div>
