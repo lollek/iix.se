@@ -3,10 +3,10 @@
         <h1>Notes</h1>
         <div class="list-group">
 
-            <a class="list-group-item" ng-repeat="post in posts" href="{{'/#/notes/' + $index}}">
-                <span class="badge">{{post.date}}</span>
+            <a class="list-group-item" ng-repeat="note in notes" href="{{'/#/notes/' + $index}}">
+                <span class="badge">{{note.date}}</span>
                 &raquo;
-                {{post.title}}
+                {{note.title}}
             </a>
 
         </div>

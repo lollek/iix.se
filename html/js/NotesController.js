@@ -1,9 +1,10 @@
 (function() {
     'use strict';
 
-    angular.module("mainApp").controller('NotesController', ["$scope",
-        function($scope) {
-            $scope.posts = note_posts;
+    angular.module("mainApp").controller('NotesController', ["$scope", "$routeParams",
+        function($scope, $routeParams) {
+            $scope.notes = note_posts;
+            $scope.postIndex = $routeParams.noteId;
         }]);
 
     var note_posts = [
