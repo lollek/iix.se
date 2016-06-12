@@ -223,4 +223,4 @@
             title: "Installing Spotify on Linux"
         }
     ];
-})
+})();
