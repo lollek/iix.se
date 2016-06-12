@@ -10,7 +10,10 @@
             .when("/", {templateUrl: "partials/main.html"})
             
             // Notes
-            .when("/notes", {templateUrl: "partials/notes.html"})
+            .when("/notes", {
+                templateUrl: "partials/notes.html",
+                controller: "NotesController"
+            })
             .when("/notes/:name", {
                 templateUrl: function(urlattr) {
                     return "/partials/notes/" + urlattr.name;
