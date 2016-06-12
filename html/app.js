@@ -38,9 +38,10 @@
             .otherwise({redirectTo: "/"});
     }]);
 
-    app.controller('NotesController', function() {
-       this.posts = note_posts;
-    });
+    app.controller('NotesController', ["$scope",
+        function($scope) {
+            $scope.posts = note_posts;
+    }]);
 
     var note_posts = [
         {
