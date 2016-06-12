@@ -4,7 +4,7 @@
     angular.module("mainApp").controller('NotesController', ["$scope", "$routeParams",
         function($scope, $routeParams) {
             $scope.notes = note_posts;
-            $scope.postIndex = $routeParams.noteId;
+            $scope.noteIndex = $routeParams.noteId;
         }]);
 
     var note_posts = [
