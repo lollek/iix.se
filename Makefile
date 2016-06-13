@@ -1,35 +1,37 @@
 all:
 	rsync -r --exclude .git . leim:~/www
+.PHONY: all
 
 prod:
 	scp -r html iix.se:/var/www/html.tmp
 	ssh iix.se "rm -rf /var/www/html && mv /var/www/html.tmp /var/www/html"
+.PHONY: prod
 
 gen:	html_md
+.PHONY: gen
 
 ##
 #  Generate html from md
 %.html: %.md
 	pandoc -f markdown_github -t html -o $*.html $*.md
 
-html_md: notes wishlist
+html_md: notes lists
+.PHONY: html_md
 
 # partials/notes/*.html
 NOTES_MD = $(wildcard md/notes/*.md)
 NOTES_HTML = $(NOTES_MD:.md=.html)
 notes:	$(NOTES_HTML)
 	mv $(NOTES_HTML) html/partials/notes/
+.PHONY: notes
 
-# partials/wishlist.html
-WISHLIST_TARGET = html/partials/wishlist.html
-wishlist: md/wishlist.html
-	@# Start div
-	@echo "<div class=\"container\" role=\"main\">" > $(WISHLIST_TARGET)
-
-	@sed -i '' 's/<table>/<table class="table table-hover">/' $<
-	@cat $< >> $(WISHLIST_TARGET)
-	@rm $<
-
-	@# End div
-	@echo "</div>" >> $(WISHLIST_TARGET)
-	@echo "Created $(WISHLIST_TARGET)"
+# partials/{wishlist,beer}.html
+lists: md/wishlist.html md/beer.html
+	@$(foreach file, $^, \
+	  sed -i '' \
+	  -e '1s/^/<div class="container" role="main">/' \
+	  -e 's/<table>/<table class="table table-hover">/' \
+	  -e '$$s/$$/<\/div>/' \
+	  $(file);)
+	mv $^ html/partials/
+.PHONY: lists
