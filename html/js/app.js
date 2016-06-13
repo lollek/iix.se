@@ -11,6 +11,7 @@
             
             $routeProvider
                 .when('/', {templateUrl: '/partials/main.html'})
+                .when('/404', {templateUrl: '/partials/404.html'})
 
                 // Notes
                 .when('/notes', {
@@ -37,7 +38,7 @@
                 })
 
                 // Fallthrough
-                .otherwise({redirectTo: '/'});
+                .otherwise({redirectTo: '/404'});
         }]);
 
     app.filter('reverse', function() {
