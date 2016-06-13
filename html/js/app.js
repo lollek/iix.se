@@ -23,27 +23,20 @@
                     controller: 'NotesController'
                 })
 
-                // Beerlist
+                // Lists
                 .when('/beer', {templateUrl: '/partials/beer.html'})
-
-                // Wishlist
                 .when('/wishlist', {templateUrl: '/partials/wishlist.html'})
 
                 // Moria
-                .when('/moria', {templateUrl: '/partials/moria.html'})
-                .when('/moria/:name', {
-                    templateUrl: function(urlattr) {
-                        return '/partials/moria/' + urlattr.name;
-                    }
+                .when('/moria', { templateUrl: '/partials/moria.html' })
+                .when('/moria/:filepath', {
+                   templateUrl: function (urlattr) {
+                       return '/partials/moria/' + urlattr.filepath;
+                   }
                 })
 
                 // Fallthrough
                 .otherwise({redirectTo: '/404'});
-        }]);
-
-    app.filter('reverse', function() {
-        return function(items) {
-            return items.slice().reverse();
-        };
-    });
+        }
+    ]);
 })();
