@@ -21,7 +21,7 @@
             };
 
             $scope.getNotePath = function() {
-                return '/partials/notes/' + $scope.notes[$scope.getRevIndex($scope.noteIndex)].href;
+                return '/html/notes/' + $scope.notes[$scope.getRevIndex($scope.noteIndex)].href;
             };
         }]);
 

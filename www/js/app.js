@@ -10,28 +10,28 @@
             $locationProvider.html5Mode(true);
             
             $routeProvider
-                .when('/', {templateUrl: '/partials/main.html'})
-                .when('/404', {templateUrl: '/partials/404.html'})
+                .when('/', {templateUrl: '/html/main.html'})
+                .when('/404', {templateUrl: '/html/404.html'})
 
                 // Notes
                 .when('/notes', {
-                    templateUrl: '/partials/notes.html',
+                    templateUrl: '/html/notes.html',
                     controller: 'NotesController'
                 })
                 .when('/notes/:noteId', {
-                    templateUrl: '/partials/note.html',
+                    templateUrl: '/html/note.html',
                     controller: 'NotesController'
                 })
 
                 // Lists
-                .when('/beer', {templateUrl: '/partials/beer.html'})
-                .when('/wishlist', {templateUrl: '/partials/wishlist.html'})
+                .when('/beer', {templateUrl: '/html/beer.html'})
+                .when('/wishlist', {templateUrl: '/html/wishlist.html'})
 
                 // Moria
-                .when('/moria', { templateUrl: '/partials/moria.html' })
+                .when('/moria', { templateUrl: '/html/moria.html' })
                 .when('/moria/:filepath', {
                    templateUrl: function (urlattr) {
-                       return '/partials/moria/' + urlattr.filepath;
+                       return '/html/moria/' + urlattr.filepath;
                    }
                 })
 

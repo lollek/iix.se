@@ -18,14 +18,14 @@ gen:	html_md
 html_md: notes container
 .PHONY: html_md
 
-# partials/notes/*.html
+# html/notes/*.html
 NOTES_MD = $(wildcard md/notes/*.md)
 NOTES_HTML = $(NOTES_MD:.md=.html)
 notes:	$(NOTES_HTML)
-	mv $(NOTES_HTML) www/partials/notes/
+	mv $(NOTES_HTML) www/html/notes/
 .PHONY: notes
 
-# partials/{wishlist,beer,moria}.html
+# html/{wishlist,beer,moria}.html
 CONTAINER_MD = $(wildcard md/*.md)
 CONTAINER_HTML = $(CONTAINER_MD:.md=.html)
 container: $(CONTAINER_HTML)
@@ -35,5 +35,5 @@ container: $(CONTAINER_HTML)
 	  -e 's/<table>/<table class="table table-hover">/' \
 	  -e '$$s/$$/<\/div>/' \
 	  $(file);)
-	mv $^ www/partials/
+	mv $^ www/html/
 .PHONY: lists
