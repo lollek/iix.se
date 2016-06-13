@@ -3,7 +3,7 @@ all:
 .PHONY: all
 
 prod:
-	scp -r html iix.se:/var/www/html.tmp
+	scp -r www iix.se:/var/www/html.tmp
 	ssh iix.se "rm -rf /var/www/html && mv /var/www/html.tmp /var/www/html"
 .PHONY: prod
 
@@ -22,7 +22,7 @@ html_md: notes container
 NOTES_MD = $(wildcard md/notes/*.md)
 NOTES_HTML = $(NOTES_MD:.md=.html)
 notes:	$(NOTES_HTML)
-	mv $(NOTES_HTML) html/partials/notes/
+	mv $(NOTES_HTML) www/partials/notes/
 .PHONY: notes
 
 # partials/{wishlist,beer,moria}.html
@@ -35,5 +35,5 @@ container: $(CONTAINER_HTML)
 	  -e 's/<table>/<table class="table table-hover">/' \
 	  -e '$$s/$$/<\/div>/' \
 	  $(file);)
-	mv $^ html/partials/
+	mv $^ www/partials/
 .PHONY: lists
