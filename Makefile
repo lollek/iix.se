@@ -15,7 +15,7 @@ gen:	html_md
 %.html: %.md
 	pandoc -f markdown_github -t html -o $*.html $*.md
 
-html_md: notes lists
+html_md: notes container
 .PHONY: html_md
 
 # partials/notes/*.html
@@ -25,8 +25,10 @@ notes:	$(NOTES_HTML)
 	mv $(NOTES_HTML) html/partials/notes/
 .PHONY: notes
 
-# partials/{wishlist,beer}.html
-lists: md/wishlist.html md/beer.html
+# partials/{wishlist,beer,moria}.html
+CONTAINER_MD = $(wildcard md/*.md)
+CONTAINER_HTML = $(CONTAINER_MD:.md=.html)
+container: $(CONTAINER_HTML)
 	@$(foreach file, $^, \
 	  sed -i '' \
 	  -e '1s/^/<div class="container" role="main">/' \
