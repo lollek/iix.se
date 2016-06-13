@@ -4,7 +4,13 @@
     angular.module('mainApp').controller('NotesController', ['$scope', '$routeParams',
         function($scope, $routeParams) {
             $scope.notes = note_posts;
+            
             $scope.noteIndex = $routeParams.noteId;
+            if ($scope.noteIndex === undefined || $scope.noteIndex >= note_posts.length ||
+                $scope.noteIndex < 0) {
+                
+                $scope.noteIndex = 0;
+            }
 
             $scope.getRevIndex = function(index) {
                 return $scope.notes.length -index -1;
