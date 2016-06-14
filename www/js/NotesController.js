@@ -29,7 +29,7 @@
         {
             href: '2016-06-14-apache.html',
             date: '14 Jun 2016',
-            title: 'Apache'
+            title: 'Apache rewrite for angular-js html5mode'
         },
         {
             href: '2016-03-24-awk.html',
