@@ -27,6 +27,11 @@
 
     var note_posts = [
         {
+            href: '2016-06-14-apache.html',
+            date: '14 Jun 2016',
+            title: 'Apache'
+        },
+        {
             href: '2016-03-24-awk.html',
             date: '24 Mar 2016',
             title: 'Awk'
