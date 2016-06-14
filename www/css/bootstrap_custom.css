@@ -1,5 +1,7 @@
-body { padding-top: 70px; } /* To make the navbar not block */
+body {
+    padding-top: 60px;
+}
 
 .jumbotron {
-  background-color: white;
+    background-color: white;
 }
