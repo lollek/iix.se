@@ -1,4 +1,3 @@
-<div class="container" role="main">
 # Böcker
 
 | Namn | Författare | Övrigt |
@@ -29,4 +28,3 @@
 | Epic of Gilgamesh | ? | Engelska |
 | Njáls saga | ? | Engelska |
 | [Rogues](https://en.wikipedia.org/wiki/Rogues_(anthology)) | Olika | Engelska |
-</div>

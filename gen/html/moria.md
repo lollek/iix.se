@@ -1,4 +1,3 @@
-<div class="container" role="main">
 # Guide to Moria Adventuring (or How to Slay Your Balrog)
 
 The information on this page comes from Beej's moria page, 30 minutes of UMoria,
@@ -17,4 +16,3 @@ mentioned in one of the links.
 - [General Tips](/moria/general.html)
 - [Farming with a wand of clone monster](/moria/wocm.html)
 - [Winning Moria with a Mage](/moria/winning_mage.html)
-</div>

@@ -1,4 +1,3 @@
-<div class="container" role="main">
 # Beer
 
 | Name | Brewery | Percentage | Country | Type | S-Score | O-Score |
@@ -63,4 +62,3 @@
 | Titan IPA | Great Divide Brewing Company | 7.1 | USA | IPA | 5 | 5  |
 | Lil'B | Evil Twin Brewing | 11.5 | USA | Imperial Porter | 2 | 4  |
 | Le Merle | North Coast Brewing Company | 7.9 | USA | Belgian Style Farmhouse Ale | 3 | 3  |
-</div>
