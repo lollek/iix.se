@@ -12,7 +12,7 @@
 
     apt-get update
 
-**Add this stupid old dependency**
+**Add this stupid old dependency**  
 *This might not be needed anymore / on other distros. Just do it if the next step doesn't work*
 
     wget snapshot.debian.org/archive/debian/20110406T213352Z/pool/main/o/openssl098/libssl0.9.8_0.9.8o-6_amd64.deb
