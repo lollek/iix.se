@@ -6,7 +6,7 @@
 6. (Ubuntu) Symlink /opt/oracle-java to /usr/lib/jvm/default-java
 7. (Ubuntu) Symlink /opt/oracle-java/bin/java to /usr/bin/java
 
-## If you have 64-bit
-# On ubuntu
+If you have a 64-bit system, you'll need to install 32-bit libraries:
 
+    # On ubuntu
     sudo apt-get install lib32z1 lib32ncurses5 lib32bz2-1.0 lib32stdc++6
