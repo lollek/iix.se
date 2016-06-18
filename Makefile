@@ -1,4 +1,4 @@
-all:
+all:	gen
 	rsync -r --exclude .git . leim:~/www
 .PHONY: all
 
