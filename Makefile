@@ -2,7 +2,7 @@ all:	gen
 	rsync -r --exclude .git . leim:~/www
 .PHONY: all
 
-prod:
+prod:	gen
 	scp -r www iix.se:/var/www/html.tmp
 	ssh iix.se "rm -rf /var/www/html && mv /var/www/html.tmp /var/www/html"
 .PHONY: prod
