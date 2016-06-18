@@ -1,8 +1,6 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h1 class="panel-title"> {{getNoteTitle()}} </h1>
-    </div>
+<div class="page-header">
+    <h1>{{getNoteTitle()}}</h1>
+</div>
 
-    <div class="panel-body" ng-include=getNotePath()>
-    </div>
+<div ng-include=getNotePath()>
 </div>
