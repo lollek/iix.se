@@ -6,7 +6,6 @@
 | Ta eis heauton | Marcus Aurelius | Engelska, översatt av Gregory Hayes |
 | Catch 22 | Joseph Heller | Engelska |
 | The Sound and the Fury | William Faulkner | Engelska |
-| To the Lighthouse | Virginia Woolf | Engelska |
 | The Magic Mountain | Thomas Mann | Engelska |
 | Don Quixote | Miguel de Cervantes | Engelska |
 | Darkness at Noon | Arthur Koestler | Engelska |
