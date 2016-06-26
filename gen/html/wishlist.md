@@ -27,3 +27,4 @@
 | Epic of Gilgamesh | ? | Engelska |
 | Njáls saga | ? | Engelska |
 | [Rogues](https://en.wikipedia.org/wiki/Rogues_(anthology)) | Olika | Engelska |
+| Cat's Cradle | Kurt Vonnegut | Engelska |
