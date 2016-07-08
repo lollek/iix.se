@@ -7,6 +7,11 @@ prod:	gen
 	ssh iix.se "rm -rf /var/www/html && mv /var/www/html.tmp /var/www/html"
 .PHONY: prod
 
+prod2:	gen
+	scp -r www david2:/var/www/iix.se.tmp
+	ssh david2 "rm -rf /var/www/iix.se && mv /var/www/iix.se.tmp /var/www/iix.se"
+.PHONY: prod
+
 gen:	html_md
 .PHONY: gen
 
