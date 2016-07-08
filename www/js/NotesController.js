@@ -27,6 +27,11 @@
 
     var note_posts = [
         {
+            href: '2016-07-07-using-kvm.html',
+            date: '7 Jul 2016',
+            title: 'Using KVM'
+        },
+        {
             href: '2016-06-14-apache.html',
             date: '14 Jun 2016',
             title: 'Apache rewrite for angular-js html5mode'
