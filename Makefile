@@ -1,5 +1,5 @@
 all:	gen
-	rsync -r --exclude .git . leim:~/www
+	npm start
 .PHONY: all
 
 prod:	gen
