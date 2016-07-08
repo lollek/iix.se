@@ -15,7 +15,6 @@
 | The Public Burning | Robert Coover | Engelska |
 | My Name is Red | Orham Pamuk | Engelska |
 | The Tin Drum | Günter Grass | Engelska |
-| Brat'ya Karamazovy | Fyodor Dostoyevsky | Engelska |
 | Diatribai | Epictetus | Engelska |
 | Im Westen nichts Neues | Erich Maria Remarque | Engelska |
 | Brave New World | Aldous Huxley | Engelska |
