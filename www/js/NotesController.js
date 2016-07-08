@@ -28,7 +28,7 @@
     var note_posts = [
         {
             href: '2016-07-07-using-kvm.html',
-            date: '7 Jul 2016',
+            date: '07 Jul 2016',
             title: 'Using KVM'
         },
         {
