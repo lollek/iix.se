@@ -2,28 +2,22 @@
 
 | Namn | Författare | Övrigt |
 | ---- | ---------- | ------ |
-| The Grapes of Wrath | John Steinbeck | Engelska |
-| Ta eis heauton | Marcus Aurelius | Engelska, översatt av Gregory Hayes |
-| Catch 22 | Joseph Heller | Engelska |
-| The Sound and the Fury | William Faulkner | Engelska |
-| The Magic Mountain | Thomas Mann | Engelska |
-| Don Quixote | Miguel de Cervantes | Engelska |
-| Darkness at Noon | Arthur Koestler | Engelska |
-| The Great Gatsby | F. Scott Fitzgerald | Engelska |
-| The Making of Americans | Gertrude Stein | Engelska |
-| Gravity's Rainbow | Thomas Pynchon | Engelska |
-| The Public Burning | Robert Coover | Engelska |
-| My Name is Red | Orham Pamuk | Engelska |
-| The Tin Drum | Günter Grass | Engelska |
-| Diatribai | Epictetus | Engelska |
-| Im Westen nichts Neues | Erich Maria Remarque | Engelska |
+| American Gods | Neil Gaiman | Engelska |
 | Brave New World | Aldous Huxley | Engelska |
-| The Old Man and the Sea | Ernest Hemingway | Engelska |
-| Fahrenheit 451 | Ray Bradbury | Engelska |
-| Lolita | Vladimir Nabokov | Engelska |
+| Cat's Cradle | Kurt Vonnegut | Engelska |
+| Catch 22 | Joseph Heller | Engelska |
 | Comentarii de Bello Gallico | Caesar | Parallell Svenska/Latin |
-| Divina Commedia | Dante Alighieri | Engelska |
+| Darkness at Noon | Arthur Koestler | Engelska |
+| Diatribai | Epictetus | Engelska |
+| Don Quixote | Miguel de Cervantes | Engelska |
 | Epic of Gilgamesh | ? | Engelska |
+| Fahrenheit 451 | Ray Bradbury | Engelska |
+| Im Westen nichts Neues | Erich Maria Remarque | Engelska |
+| La Divina Commedia | Dante Alighieri | Engelska |
+| My Name is Red | Orham Pamuk | Engelska |
 | Njáls saga | ? | Engelska |
 | [Rogues](https://en.wikipedia.org/wiki/Rogues_(anthology)) | Olika | Engelska |
-| Cat's Cradle | Kurt Vonnegut | Engelska |
+| Ta eis heauton | Marcus Aurelius | Engelska, översatt av Gregory Hayes |
+| The Grapes of Wrath | John Steinbeck | Engelska |
+| The Magic Mountain | Thomas Mann | Engelska |
+| The Old Man and the Sea | Ernest Hemingway | Engelska |
